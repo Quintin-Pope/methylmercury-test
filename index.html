@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>math.js | plot | jquery</title>
+
+    <script src="https://unpkg.com/mathjs@5.1.1/dist/math.min.js"></script>
+
+    <script src="https://cdn.plot.ly/plotly-1.35.2.min.js"></script>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script scr=""></script>
+
+    <style>
+        input[type=text] {
+        width: 300px;
+        }
+        input {
+        padding: 6px;
+        }
+        body, html, input {
+        font-family: sans-serif;
+        font-size: 11pt;
+
+        }
+        form {
+        margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+<form id="form">
+    <label for="eq">Weight (kg):</label>
+    <input type="text" id="weight" value="70" />
+    <input type="submit" value="Draw" />
+</form>
+
+<div id="plot"></div>
+
+<p>
+    Adapted from the example hosted <a href="http://mathjs.org/examples/browser/plot.html.html"> here</a>
+    <br>
+    Used plot library: <a href="https://plot.ly/javascript/">Plotly</a>
+</p>
+
+<script type="text/javascript" src="estimate.js"></script>
+
+<script>
+    function draw() {
+        try {
+        // compile the expression once
+            var halfLife = document.getElementById('weight').value
+            if ( !jQuery.isNumeric(halfLife) ) {
+                halfLife = 5
+                console.error("Half-life must be a numeric value.")
+                alert("Half-life must be a numeric value.")
+            }
+            const expr = math.compile("100 * ( (1/2)^(x/".concat(halfLife, "))"))
+
+
+      
+            // evaluate the expression repeatedly for different values of x
+            const xValues = math.range(0, 10, 0.1).toArray()
+            const yValues = xValues.map(function (x) {
+                return expr.eval({x: x})
+            })
+
+            // render the plot using plotly
+            const trace1 = {
+                x: xValues,
+                y: yValues,
+                type: 'scatter'
+            }
+            
+            var layout = {
+                xaxis: {
+                    range: [0, 10],
+                    autotick : false,
+                    tick0: 0,
+                    dtick: 1,
+                    title: 'Hours'
+                },
+                yaxis: {
+                    range: [0, 100],
+                    title: 'Percent of Full Dose'
+                }
+            }
+            const data = [trace1]
+            Plotly.newPlot('plot', data, layout)
+        }
+        catch (err) {
+            console.error(err)
+            alert(err)
+        }
+    }
+
+    document.getElementById('form').onsubmit = function (event) {
+        event.preventDefault()
+        draw()
+    }
+
+  draw()
+</script>
+
+</body>
+</html>

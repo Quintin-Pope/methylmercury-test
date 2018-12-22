@@ -1,0 +1,18 @@
+{
+  "name": "mmee",
+  "version": "1.0.0",
+  "description": "Implements a model developed at the University of Rochester to estimate the consentration of methylmercury in the body based on a person's intake rate, body weight and gender.",
+  "main": "estimate.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Quintin Pope",
+  "license": "ISC",
+  "dependencies": {
+    "odex": "2.0.4",
+    "readline-sync": "1.4.9",
+    "xmlhttprequest":"1.8.0",
+    "plotly.js-dist":"1.41.3",
+    "localtunnel":"1.9.1"
+  }
+}
